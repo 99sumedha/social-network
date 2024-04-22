@@ -2,33 +2,62 @@ package com.social.socialnetwork.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 public class Post {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
+    private Long postId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(nullable = false)
     private String text;
-    private Boolean visibility;
-    private Date createdDate;
 
-    public long getId() {
-        return id;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Visibility visibility;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Like> likes = new HashSet<>();
+
+
+    public Post() {
+        this.createdAt = LocalDateTime.now();
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Post(User user, String text, Visibility visibility) {
+        this();
+        this.user = user;
+        this.text = text;
+        this.visibility = visibility;
     }
 
-    public long getUserId() {
-        return userId;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getText() {
@@ -39,19 +68,27 @@ public class Post {
         this.text = text;
     }
 
-    public Boolean getVisibility() {
+    public Visibility getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Boolean visibility) {
+    public void setVisibility(Visibility visibility) {
         this.visibility = visibility;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }
