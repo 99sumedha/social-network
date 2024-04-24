@@ -1,8 +1,10 @@
 package com.social.socialnetwork.controller;
 
+import com.social.socialnetwork.DTO.PostResponseDTO;
 import com.social.socialnetwork.model.Post;
-import com.social.socialnetwork.service.PostRequestDTO;
-import com.social.socialnetwork.service.PostResponseDTO;
+import com.social.socialnetwork.DTO.PostRequestDTO;
+import com.social.socialnetwork.model.User;
+import com.social.socialnetwork.service.LikeService;
 import com.social.socialnetwork.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,12 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final LikeService likeService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, LikeService likeService) {
         this.postService = postService;
+        this.likeService = likeService;
     }
 
     // Endpoint to create a new post
@@ -39,8 +43,8 @@ public class PostController {
 
     // Endpoint to like a post
     @PostMapping("/{postId}/like")
-    public ResponseEntity<String> likePost(@PathVariable Long postId) {
-        postService.likePost(postId);
+    public ResponseEntity<String> likePost(@PathVariable User user, Post post) {
+        likeService.likePost(user, post);
         return ResponseEntity.ok("Post liked successfully");
     }
 

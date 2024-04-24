@@ -1,11 +1,11 @@
-package com.social.socialnetwork.service;
+package com.social.socialnetwork.DTO;
 
-import com.social.socialnetwork.model.Visibility;
+import com.social.socialnetwork.model.Post;
 
 public class PostRequestDTO {
     private Long userId;
     private String text;
-    private Visibility visibility;
+    private Post.Visibility visibility;
 
     public Long getUserId() {
         return userId;
@@ -23,11 +23,11 @@ public class PostRequestDTO {
         this.text = text;
     }
 
-    public Visibility getVisibility() {
+    public Post.Visibility getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Visibility visibility) {
+    public void setVisibility(Post.Visibility visibility) {
         this.visibility = visibility;
     }
 }

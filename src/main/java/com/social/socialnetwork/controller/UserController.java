@@ -2,6 +2,7 @@ package com.social.socialnetwork.controller;
 
 import com.social.socialnetwork.model.User;
 import com.social.socialnetwork.repository.UserRepository;
+import com.social.socialnetwork.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,28 +14,26 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+   private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@PathVariable (value = "id") long id) {
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isPresent()){
-            return ResponseEntity.ok().body(user.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
+        return userService.getUserById(id);
     }
 
     @PostMapping
     public User saveUser(@Validated @RequestBody User user) {
-        return userRepository.save(user);
+        return userService.setUser(user);
     }
+
+
 }

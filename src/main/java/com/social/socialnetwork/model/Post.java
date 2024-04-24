@@ -32,6 +32,11 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Like> likes = new HashSet<>();
 
+    public enum Visibility {
+        PUBLIC, PRIVATE
+    }
+
+
 
     public Post() {
         this.createdAt = LocalDateTime.now();

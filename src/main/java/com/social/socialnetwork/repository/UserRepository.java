@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     // Custom query method to find a user by full name
-
+//    User findByFullName(String fullName);
 }
