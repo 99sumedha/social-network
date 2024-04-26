@@ -1,7 +1,5 @@
 package com.social.socialnetwork.model;
 
-import com.social.socialnetwork.model.Post;
-import com.social.socialnetwork.model.User;
 import jakarta.persistence.*;
 
 

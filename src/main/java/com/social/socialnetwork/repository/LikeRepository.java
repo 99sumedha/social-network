@@ -12,7 +12,7 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     // Custom query method to find a like by user and post
     Like findByUserAndPost(User user, Post post);
 
+    // Custom query method to count likes in post
     int countByPost(Post post);
 
-    // Add more custom query methods as needed...
 }

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/likes")
 public class LikeController {
@@ -28,9 +30,9 @@ public class LikeController {
 
     // Endpoint to like a post
     @PostMapping("/like")
-    public ResponseEntity<?> likePost(@RequestParam Long userId, @RequestParam Long postId) {
-        User user = userService.getUserById(userId).getBody();
-        Post post = postService.getPostById(postId).getBody();
+    public ResponseEntity<?> likePost(@RequestBody Map<String, Long> payload) {
+        User user = userService.getUserById(payload.get("userId")).getBody();
+        Post post = postService.getPostById(payload.get("postId")).getBody();
 
         if (user == null || post == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or post not found");
@@ -43,14 +45,14 @@ public class LikeController {
         }
 
         Like like = likeService.likePost(user, post);
-        return ResponseEntity.ok(like);
+        return ResponseEntity.ok("Post liked successfully!");
     }
 
     // Endpoint to unlike a post
     @DeleteMapping("/unlike")
-    public ResponseEntity<?> unlikePost(@RequestParam Long userId, @RequestParam Long postId) {
-        User user = userService.getUserById(userId).getBody();
-        Post post = postService.getPostById(postId).getBody();
+    public ResponseEntity<?> unlikePost(@RequestBody Map<String, Long> payload) {
+        User user = userService.getUserById(payload.get("userId")).getBody();
+        Post post = postService.getPostById(payload.get("postId")).getBody();
 
         if (user == null || post == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or post not found");

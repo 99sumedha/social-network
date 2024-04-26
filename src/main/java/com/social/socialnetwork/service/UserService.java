@@ -2,7 +2,6 @@ package com.social.socialnetwork.service;
 
 import com.social.socialnetwork.model.User;
 import com.social.socialnetwork.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +34,11 @@ public class UserService {
 
     public User setUser (User user) {
 
-//        if(user.getFullName().equals("")) {
-//            throw new NullPointerException();
-//        } else {
-//            return userRepository.save(user);
-//        }
-        return userRepository.save(user);
+            if(user.getFullName().equals("")) {
+                throw new NullPointerException();
+            } else {
+                return userRepository.save(user);
+            }
+
     }
 }
